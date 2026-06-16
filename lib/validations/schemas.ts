@@ -29,8 +29,17 @@ export const userSchema = z.object({
   active: z.boolean().optional(),
 });
 
+export const productSchema = z.object({
+  name: z.string().min(1, "Nama wajib diisi").max(200),
+  description: z.string().min(1, "Deskripsi wajib diisi"),
+  price: z.coerce.number().positive("Harga harus lebih dari 0"),
+  imageUrl: z.string().url().optional().or(z.literal("")),
+  published: z.coerce.boolean().optional(),
+});
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type CategoryInput = z.infer<typeof categorySchema>;
 export type TagInput = z.infer<typeof tagSchema>;
 export type ArticleInput = z.infer<typeof articleSchema>;
 export type UserInput = z.infer<typeof userSchema>;
+export type ProductInput = z.infer<typeof productSchema>;

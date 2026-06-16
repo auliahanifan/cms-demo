@@ -1,0 +1,24 @@
+---
+description: Wajib E2E test di Chrome saat membuat atau mengubah fitur browser
+alwaysApply: true
+---
+
+# End-to-end testing wajib (Chrome)
+
+Saat membuat atau mengubah fitur yang berjalan di browser, **wajib** verifikasi end-to-end di Chrome sebelum dianggap selesai.
+
+## Kapan berlaku
+
+- Fitur baru (halaman, form, alur dashboard, UI publik)
+- Perubahan alur pengguna (navigasi, submit form, auth, CRUD)
+- Perbaikan bug yang terlihat di browser
+
+## Cara verifikasi
+
+1. Jalankan dev server jika belum aktif.
+2. Uji alur utama di Chrome via **Chrome DevTools MCP**.
+3. Pastikan: halaman termuat, interaksi utama berhasil, tidak ada error console, network OK.
+4. Jika ada error: **perbaiki dan ulangi** sampai alur utama lulus.
+5. Jangan klaim selesai tanpa bukti verifikasi runtime.
+
+Fitur **belum selesai** jika E2E Chrome belum lulus atau masih ada error yang memblokir alur utama.

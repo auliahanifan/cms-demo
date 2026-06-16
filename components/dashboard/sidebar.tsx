@@ -14,6 +14,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { href: "/dashboard", label: "Ringkasan" },
   { href: "/dashboard/articles", label: "Artikel" },
+  { href: "/dashboard/products", label: "Produk", roles: ["ADMIN", "EDITOR"] },
   { href: "/dashboard/categories", label: "Kategori", roles: ["ADMIN", "EDITOR"] },
   { href: "/dashboard/tags", label: "Tag", roles: ["ADMIN", "EDITOR"] },
   { href: "/dashboard/users", label: "Pengguna", roles: ["ADMIN"] },

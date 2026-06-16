@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireUser } from "@/lib/auth/session";
+import { canManageProducts } from "@/lib/auth/rbac";
 import { getDashboardStats } from "@/lib/queries/articles";
 import { updateOwnPasswordAction } from "@/lib/actions/users";
 import { ActionForm, FormField } from "@/components/forms/form-fields";
@@ -79,6 +80,19 @@ export default async function DashboardPage() {
           >
             Kelola Artikel
           </Link>
+          {canManageProducts(user) && (
+            <>
+              <Link href="/dashboard/products/new" className={cn(buttonVariants())}>
+                Tambah Produk
+              </Link>
+              <Link
+                href="/dashboard/products"
+                className={cn(buttonVariants({ variant: "outline" }))}
+              >
+                Kelola Produk
+              </Link>
+            </>
+          )}
         </CardContent>
       </Card>
 

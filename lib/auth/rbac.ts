@@ -9,6 +9,10 @@ export function canManageTaxonomy(user: SessionUser): boolean {
   return user.role === "ADMIN" || user.role === "EDITOR";
 }
 
+export function canManageProducts(user: SessionUser): boolean {
+  return user.role === "ADMIN" || user.role === "EDITOR";
+}
+
 export function canEditArticle(
   user: SessionUser,
   article: Pick<Article, "authorId" | "status">
