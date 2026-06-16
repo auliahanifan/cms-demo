@@ -4,6 +4,9 @@ import { useActionState, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { ActionResult } from "@/lib/actions/auth";
 import { FormMessage, FormField } from "@/components/forms/form-fields";
+import { EmptyState } from "@/components/patterns/empty-state";
+import { PageContainer } from "@/components/patterns/page-container";
+import { PageHeader } from "@/components/patterns/page-header";
 import { SuccessMessage } from "@/components/patterns/success-message";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -58,11 +61,8 @@ export function CategoryTagManager({
   const router = useRouter();
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">{title}</h1>
-        <p className="text-muted-foreground">{description}</p>
-      </div>
+    <PageContainer variant="dashboard">
+      <PageHeader title={title} description={description} />
 
       <form action={createFormAction} className="flex max-w-md gap-2">
         <div className="flex-1">
@@ -78,7 +78,7 @@ export function CategoryTagManager({
       )}
 
       {items.length === 0 ? (
-        <p className="text-muted-foreground">{emptyMessage}</p>
+        <EmptyState title={emptyMessage} />
       ) : (
         <div className="rounded-lg border">
           <Table>
@@ -105,7 +105,7 @@ export function CategoryTagManager({
           </Table>
         </div>
       )}
-    </div>
+    </PageContainer>
   );
 }
 

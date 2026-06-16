@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 const pageContainerVariants = cva("mx-auto w-full", {
   variants: {
     variant: {
-      public: "max-w-3xl space-y-6",
+      content: "max-w-3xl space-y-6",
+      compact: "max-w-lg space-y-6",
       dashboard: "max-w-6xl space-y-6",
-      form: "max-w-3xl space-y-6",
     },
   },
   defaultVariants: {

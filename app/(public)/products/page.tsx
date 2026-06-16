@@ -2,8 +2,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getPublishedProducts } from "@/lib/queries/products";
 import { ProductCard } from "@/components/public/product-card";
+import { EmptyState } from "@/components/patterns/empty-state";
+import { PageHeader } from "@/components/patterns/page-header";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Produk",
@@ -20,12 +23,11 @@ export default async function ProductsPage({ searchParams }: Props) {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Produk</h1>
-        <p className="mt-2 text-muted-foreground">
-          Jelajahi katalog produk kami.
-        </p>
-      </div>
+      <PageHeader
+        level="display"
+        title="Produk"
+        description="Jelajahi katalog produk kami."
+      />
 
       <form className="flex flex-wrap gap-2" method="get">
         <Input
@@ -40,13 +42,16 @@ export default async function ProductsPage({ searchParams }: Props) {
       </form>
 
       {products.length === 0 ? (
-        <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-          {q ? (
-            <p>Tidak ada produk yang cocok dengan pencarian Anda.</p>
-          ) : (
-            <p>Belum ada produk yang dipublikasikan.</p>
-          )}
-        </div>
+        <EmptyState
+          title={
+            q
+              ? "Tidak ada produk yang cocok"
+              : "Belum ada produk yang dipublikasikan"
+          }
+          description={
+            q ? "Coba kata kunci lain." : "Katalog akan muncul di sini."
+          }
+        />
       ) : (
         <div className="grid gap-6 sm:grid-cols-2">
           {products.map((product) => (
@@ -56,7 +61,7 @@ export default async function ProductsPage({ searchParams }: Props) {
       )}
 
       <p className="text-sm text-muted-foreground">
-        <Link href="/" className="underline">
+        <Link href="/" className={cn(buttonVariants({ variant: "link", size: "sm" }))}>
           Kembali ke beranda
         </Link>
       </p>

@@ -12,14 +12,14 @@ Semua token didefinisikan di `app/globals.css` dan didaftarkan di blok `@theme i
 | `--destructive` | `text-destructive`, `bg-destructive` | Error, hapus |
 | `--success` | `text-success`, `bg-success` | Sukses, konfirmasi positif |
 | `--warning` | `text-warning`, `bg-warning` | Peringatan |
-| `--info` | `text-info`, `bg-info` | Informasi netral |
+| `--info` | `text-info`, `bg-info` | Informasi netral (cyan — beda dari primary) |
 
 Nilai light mode (OKLCH):
 
 - Primary: `oklch(0.45 0.18 250)` — biru profesional
 - Success: `oklch(0.62 0.17 145)`
 - Warning: `oklch(0.75 0.15 85)`
-- Info: `oklch(0.55 0.15 250)`
+- Info: `oklch(0.58 0.14 220)` — cyan, bukan biru brand
 
 Dark mode memiliki override di selector `.dark`.
 
@@ -44,9 +44,11 @@ Lebar kontainer (`PageContainer`):
 
 | Variant | Class | Dipakai di |
 |---------|-------|------------|
-| `public` | `max-w-3xl` | Situs publik, form artikel |
-| `form` | `max-w-3xl` | Form create/edit |
+| `content` | `max-w-3xl` | Form artikel/produk, edit |
+| `compact` | `max-w-lg` | Form pengguna |
 | `dashboard` | `max-w-6xl` | List, tabel, ringkasan |
+
+Halaman publik memakai `max-w-3xl` dari `app/(public)/layout.tsx` — tidak perlu `PageContainer` di dalamnya.
 
 Pola vertikal umum: `space-y-6` (form), `space-y-8` (dashboard section).
 
@@ -69,5 +71,5 @@ Turunan: `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-xl` — dihitung dar
 
 1. Tambah CSS variable di `:root` dan `.dark`
 2. Daftarkan di `@theme inline` sebagai `--color-*` atau `--shadow-*`
-3. Uji di `/design-system`
+3. Uji di `/dashboard/design-system`
 4. Update dokumen ini

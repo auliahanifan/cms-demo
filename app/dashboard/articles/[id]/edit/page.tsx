@@ -13,6 +13,8 @@ import {
 } from "@/lib/queries/articles";
 import { ArticleForm } from "@/components/forms/article-form";
 import { ArticleWorkflowActions } from "@/components/article-workflow-actions";
+import { PageContainer } from "@/components/patterns/page-container";
+import { PageHeader } from "@/components/patterns/page-header";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -42,25 +44,26 @@ export default async function EditArticlePage({ params }: Props) {
   const boundDelete = deleteArticleFormAction.bind(null, id);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
+    <PageContainer variant="content">
+      <PageHeader
+        title="Edit Artikel"
+        description={`Penulis: ${article.author.name}`}
+        meta={
           <div className="mb-2">
             <StatusBadge status={article.status} />
           </div>
-          <h1 className="text-2xl font-bold">Edit Artikel</h1>
-          <p className="text-sm text-muted-foreground">
-            Penulis: {article.author.name}
-          </p>
-        </div>
-        {canDeleteArticle(user, article) && (
-          <form action={boundDelete}>
-            <Button type="submit" variant="destructive" size="sm">
-              Hapus
-            </Button>
-          </form>
-        )}
-      </div>
+        }
+        actions={
+          canDeleteArticle(user, article) ? (
+            <form action={boundDelete}>
+              <Button type="submit" variant="destructive" size="sm">
+                Hapus
+              </Button>
+            </form>
+          ) : undefined
+        }
+        className="items-start"
+      />
 
       <ArticleWorkflowActions article={article} user={user} />
 
@@ -78,6 +81,6 @@ export default async function EditArticlePage({ params }: Props) {
           tags: article.tags,
         }}
       />
-    </div>
+    </PageContainer>
   );
 }

@@ -5,6 +5,8 @@ import {
   getPublishedArticles,
 } from "@/lib/queries/articles";
 import { ArticleCard } from "@/components/public/article-card";
+import { EmptyState } from "@/components/patterns/empty-state";
+import { PageHeader } from "@/components/patterns/page-header";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,14 +25,14 @@ export default async function CategoryPage({ params }: Props) {
 
   return (
     <div className="space-y-8">
-      <div>
-        <p className="text-sm text-muted-foreground">Kategori</p>
-        <h1 className="text-3xl font-bold">{category.name}</h1>
-      </div>
+      <PageHeader
+        level="display"
+        title={category.name}
+        description="Kategori"
+      />
+
       {articles.length === 0 ? (
-        <p className="text-muted-foreground">
-          Belum ada artikel dalam kategori ini.
-        </p>
+        <EmptyState title="Belum ada artikel dalam kategori ini." />
       ) : (
         <div className="space-y-6">
           {articles.map((article) => (

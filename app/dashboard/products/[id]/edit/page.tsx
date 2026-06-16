@@ -7,6 +7,8 @@ import {
 } from "@/lib/actions/products";
 import { getProductById } from "@/lib/queries/products";
 import { ProductForm } from "@/components/forms/product-form";
+import { PageContainer } from "@/components/patterns/page-container";
+import { PageHeader } from "@/components/patterns/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -30,23 +32,26 @@ export default async function EditProductPage({ params }: Props) {
   const boundDelete = deleteProductFormAction.bind(null, id);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
+    <PageContainer variant="content">
+      <PageHeader
+        title="Edit Produk"
+        description={`Slug: ${product.slug}`}
+        meta={
           <div className="mb-2">
             <Badge variant={product.published ? "default" : "secondary"}>
               {product.published ? "Dipublikasikan" : "Draft"}
             </Badge>
           </div>
-          <h1 className="text-2xl font-bold">Edit Produk</h1>
-          <p className="text-sm text-muted-foreground">Slug: {product.slug}</p>
-        </div>
-        <form action={boundDelete}>
-          <Button type="submit" variant="destructive" size="sm">
-            Hapus
-          </Button>
-        </form>
-      </div>
+        }
+        actions={
+          <form action={boundDelete}>
+            <Button type="submit" variant="destructive" size="sm">
+              Hapus
+            </Button>
+          </form>
+        }
+        className="items-start"
+      />
 
       <Separator />
 
@@ -60,6 +65,6 @@ export default async function EditProductPage({ params }: Props) {
           published: product.published,
         }}
       />
-    </div>
+    </PageContainer>
   );
 }

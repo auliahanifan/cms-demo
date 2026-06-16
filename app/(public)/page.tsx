@@ -1,29 +1,32 @@
 import Link from "next/link";
 import { getPublishedArticles } from "@/lib/queries/articles";
 import { ArticleCard } from "@/components/public/article-card";
+import { EmptyState } from "@/components/patterns/empty-state";
+import { PageHeader } from "@/components/patterns/page-header";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default async function HomePage() {
   const { articles } = await getPublishedArticles({ limit: 20 });
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Artikel Terbaru</h1>
-        <p className="mt-2 text-muted-foreground">
-          Temukan konten terbaru dari tim kami.
-        </p>
-      </div>
+      <PageHeader
+        level="display"
+        title="Artikel Terbaru"
+        description="Temukan konten terbaru dari tim kami."
+      />
 
       {articles.length === 0 ? (
-        <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-          <p>Belum ada artikel yang dipublikasikan.</p>
-          <p className="mt-2 text-sm">
-            <Link href="/login" className="underline">
+        <EmptyState
+          title="Belum ada artikel yang dipublikasikan"
+          description="Masuk ke dashboard untuk mulai menulis."
+          action={
+            <Link href="/login" className={cn(buttonVariants({ variant: "link" }))}>
               Masuk ke dashboard
-            </Link>{" "}
-            untuk mulai menulis.
-          </p>
-        </div>
+            </Link>
+          }
+        />
       ) : (
         <div className="space-y-6">
           {articles.map((article) => (

@@ -4,7 +4,7 @@ Komponen di `components/patterns/` — bukan primitive shadcn, melainkan komposi
 
 ## PageContainer
 
-Wrapper lebar + spacing vertikal.
+Wrapper lebar + spacing vertikal untuk halaman dashboard dan form.
 
 ```tsx
 import { PageContainer } from "@/components/patterns/page-container";
@@ -16,13 +16,15 @@ import { PageContainer } from "@/components/patterns/page-container";
 
 | Prop `variant` | Layout |
 |----------------|--------|
-| `public` | `max-w-3xl space-y-6` |
-| `dashboard` | `max-w-6xl space-y-6` |
-| `form` | `max-w-3xl space-y-6` |
+| `content` | `max-w-3xl space-y-6` — form artikel/produk |
+| `compact` | `max-w-lg space-y-6` — form pengguna |
+| `dashboard` | `max-w-6xl space-y-6` — list, tabel, ringkasan |
+
+Halaman publik sudah dibungkus `max-w-3xl` di layout — gunakan `PageHeader` / `EmptyState` saja.
 
 ## PageHeader
 
-Judul halaman + deskripsi opsional + slot aksi kanan.
+Judul halaman atau section + deskripsi opsional + slot aksi kanan.
 
 ```tsx
 import { PageHeader } from "@/components/patterns/page-header";
@@ -34,15 +36,15 @@ import { PageHeader } from "@/components/patterns/page-header";
 />
 ```
 
-## SectionHeading
+| Prop `level` | Elemen | Class |
+|--------------|--------|-------|
+| `display` (default publik) | `h1` | `text-display` |
+| `page` (default) | `h1` | `text-heading-1` |
+| `section` | `h2` | `text-heading-2` |
 
-Judul section dengan aksi opsional (link, tombol kecil).
+Props tambahan: `meta` (badge/status di atas judul), `className`.
 
-```tsx
-import { SectionHeading } from "@/components/patterns/section-heading";
-
-<SectionHeading title="Aksi Cepat" action={<Link href="...">Lihat semua</Link>} />
-```
+`SectionHeading` masih ada sebagai alias `level="section"` — prefer `PageHeader` langsung.
 
 ## StatCard
 
@@ -54,17 +56,24 @@ import { StatCard } from "@/components/patterns/stat-card";
 <StatCard label="Total Artikel" value={42} description="Opsional" />
 ```
 
-## SuccessMessage
+## SuccessMessage vs Alert
 
-Feedback inline setelah form berhasil — ganti `text-green-600`.
+| Kebutuhan | Komponen |
+|-----------|----------|
+| Flash inline setelah submit form berhasil | `<SuccessMessage>` |
+| Notice persisten di halaman (password default, workflow) | `<Alert variant="success">` |
 
 ```tsx
-import { SuccessMessage } from "@/components/patterns/success-message";
-
+// Inline form flash
 {state?.success && <SuccessMessage>Berhasil disimpan.</SuccessMessage>}
-```
 
-Alternatif block-level: `Alert variant="success"` dari `components/ui/alert`.
+// Block-level notice
+<Alert variant="success">
+  <CheckCircle2 />
+  <AlertTitle>Berhasil</AlertTitle>
+  <AlertDescription>Data tersimpan.</AlertDescription>
+</Alert>
+```
 
 ## EmptyState
 
@@ -90,13 +99,11 @@ import { EmptyState } from "@/components/patterns/empty-state";
 - `success` — operasi berhasil (dengan ikon opsional)
 - `warning` — peringatan
 
-```tsx
-<Alert variant="success">
-  <CheckCircle2 />
-  <AlertTitle>Berhasil</AlertTitle>
-  <AlertDescription>Data tersimpan.</AlertDescription>
-</Alert>
-```
+## Dashboard shell
+
+`components/dashboard/shell.tsx` — layout sidebar + header untuk semua route `/dashboard/*`.
+
+Navigasi sidebar: `components/dashboard/nav.ts` (`dashboardNavItems`) — satu sumber untuk sidebar dan showcase ikon.
 
 ## Kapan membuat pattern baru
 
@@ -104,6 +111,6 @@ Ekstrak ke folder ini jika:
 
 - Pola yang sama muncul di **3+** file
 - Melibatkan komposisi 2+ primitive dengan layout tetap
-- Perlu didokumentasikan di `/design-system`
+- Perlu didokumentasikan di `/dashboard/design-system`
 
 Jangan ekstrak untuk one-off layout yang tidak akan dipakai ulang.

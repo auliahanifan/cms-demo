@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPublishedArticles, getTagBySlug } from "@/lib/queries/articles";
 import { ArticleCard } from "@/components/public/article-card";
+import { EmptyState } from "@/components/patterns/empty-state";
+import { PageHeader } from "@/components/patterns/page-header";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -20,12 +22,10 @@ export default async function TagPage({ params }: Props) {
 
   return (
     <div className="space-y-8">
-      <div>
-        <p className="text-sm text-muted-foreground">Tag</p>
-        <h1 className="text-3xl font-bold">{tag.name}</h1>
-      </div>
+      <PageHeader level="display" title={tag.name} description="Tag" />
+
       {articles.length === 0 ? (
-        <p className="text-muted-foreground">Belum ada artikel dengan tag ini.</p>
+        <EmptyState title="Belum ada artikel dengan tag ini." />
       ) : (
         <div className="space-y-6">
           {articles.map((article) => (

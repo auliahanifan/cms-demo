@@ -1,3 +1,6 @@
+import { PageHeader } from "@/components/patterns/page-header";
+
+/** @deprecated Use `<PageHeader level="section" />` instead. */
 export function SectionHeading({
   title,
   action,
@@ -5,10 +8,5 @@ export function SectionHeading({
   title: string;
   action?: React.ReactNode;
 }) {
-  return (
-    <div className="flex items-center justify-between gap-4">
-      <h2 className="text-heading-2">{title}</h2>
-      {action}
-    </div>
-  );
+  return <PageHeader level="section" title={title} actions={action} />;
 }

@@ -7,7 +7,7 @@ Panduan praktis untuk membangun UI yang konsisten di atas Tailwind v4, shadcn/ui
 1. **Clarity** — Hierarki tipografi jelas; satu aksi utama per layar.
 2. **Consistency** — Pakai token dan pattern yang sama di publik maupun dashboard.
 3. **Accessibility** — Kontras warna WCAG AA; label form selalu terhubung ke input.
-4. **Density** — Halaman publik lebih lapang (`max-w-3xl`); dashboard lebih lebar (`max-w-6xl`) dengan grid padat.
+4. **Density** — Halaman publik lebih lapang (`max-w-3xl` via layout publik); dashboard lebih lebar (`max-w-6xl`) dengan grid padat.
 
 Inspirasi visual: whitespace ala Google, pola enterprise ala Atlassian, polish halus ala Stripe.
 
@@ -15,7 +15,7 @@ Inspirasi visual: whitespace ala Google, pola enterprise ala Atlassian, polish h
 
 ```
 Butuh UI baru?
-├── Sudah ada di /design-system → pakai langsung
+├── Sudah ada di /dashboard/design-system → pakai langsung
 ├── Komposisi layout/feedback/data → components/patterns/
 ├── Kontrol dasar (button, input) → components/ui/
 └── Warna/spacing → token di globals.css
@@ -30,15 +30,15 @@ Butuh UI baru?
 - [tokens.md](./tokens.md) — warna, tipografi, spacing, shadow
 - [patterns.md](./patterns.md) — API komponen pattern
 
-Living style guide: **`/design-system`** (hanya ADMIN).
+Living style guide: **`/dashboard/design-system`** (hanya ADMIN). URL lama `/design-system` redirect ke sana.
 
 ## Cara menambah komponen baru
 
-1. Cek `/design-system` dan `components/patterns/` — mungkin sudah ada.
+1. Cek `/dashboard/design-system` dan `components/patterns/` — mungkin sudah ada.
 2. Jika dipakai di 3+ tempat, ekstrak ke `components/patterns/`.
 3. Jika butuh kontrol dasar baru, tambah via shadcn CLI ke `components/ui/`.
 4. Warna baru → tambah CSS variable di `app/globals.css`, daftarkan di `@theme inline`.
-5. Tambahkan contoh ke halaman showcase dan dokumentasi.
+5. Tambahkan contoh ke showcase (`components/design-system/`) dan dokumentasi.
 
 ## Do / Don't
 
@@ -52,8 +52,8 @@ Living style guide: **`/design-system`** (hanya ADMIN).
 
 ## Alur kerja fitur baru
 
-1. Buka `/design-system`
+1. Buka `/dashboard/design-system`
 2. Compose: `PageContainer` + `PageHeader` + form shadcn
-3. Pilih variant container: `public` | `dashboard` | `form`
-4. Feedback sukses → `SuccessMessage` atau `Alert variant="success"`
+3. Pilih variant container: `content` | `compact` | `dashboard`
+4. Feedback sukses inline form → `SuccessMessage`; notice halaman → `Alert variant="success"`
 5. State kosong → `EmptyState`

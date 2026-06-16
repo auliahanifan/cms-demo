@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { requireRole } from "@/lib/auth/session";
 import { roleLabel } from "@/lib/auth/rbac";
 import { getAllUsers } from "@/lib/queries/articles";
+import { PageContainer } from "@/components/patterns/page-container";
+import { PageHeader } from "@/components/patterns/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -24,19 +26,19 @@ export default async function UsersPage() {
   const users = await getAllUsers();
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold">Pengguna</h1>
-          <p className="text-muted-foreground">Kelola akun tim konten.</p>
-        </div>
-        <Link
-          href="/dashboard/users/new"
-          className={cn(buttonVariants())}
-        >
-          Tambah Pengguna
-        </Link>
-      </div>
+    <PageContainer variant="dashboard">
+      <PageHeader
+        title="Pengguna"
+        description="Kelola akun tim konten."
+        actions={
+          <Link
+            href="/dashboard/users/new"
+            className={cn(buttonVariants())}
+          >
+            Tambah Pengguna
+          </Link>
+        }
+      />
 
       <div className="rounded-lg border">
         <Table>
@@ -77,6 +79,6 @@ export default async function UsersPage() {
           </TableBody>
         </Table>
       </div>
-    </div>
+    </PageContainer>
   );
 }

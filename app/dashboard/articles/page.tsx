@@ -4,6 +4,9 @@ import type { ArticleStatus } from "@prisma/client";
 import { requireUser } from "@/lib/auth/session";
 import { getDashboardArticles } from "@/lib/queries/articles";
 import { StatusBadge } from "@/components/status-badge";
+import { EmptyState } from "@/components/patterns/empty-state";
+import { PageContainer } from "@/components/patterns/page-container";
+import { PageHeader } from "@/components/patterns/page-header";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -35,19 +38,19 @@ export default async function ArticlesPage({ searchParams }: Props) {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold">Artikel</h1>
-          <p className="text-muted-foreground">Kelola semua artikel.</p>
-        </div>
-        <Link
-          href="/dashboard/articles/new"
-          className={cn(buttonVariants())}
-        >
-          Artikel Baru
-        </Link>
-      </div>
+    <PageContainer variant="dashboard">
+      <PageHeader
+        title="Artikel"
+        description="Kelola semua artikel."
+        actions={
+          <Link
+            href="/dashboard/articles/new"
+            className={cn(buttonVariants())}
+          >
+            Artikel Baru
+          </Link>
+        }
+      />
 
       <form className="flex flex-wrap gap-2" method="get">
         <Input
@@ -72,12 +75,18 @@ export default async function ArticlesPage({ searchParams }: Props) {
       </form>
 
       {articles.length === 0 ? (
-        <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-          Belum ada artikel.{" "}
-          <Link href="/dashboard/articles/new" className="underline">
-            Buat artikel pertama
-          </Link>
-        </div>
+        <EmptyState
+          title="Belum ada artikel"
+          description="Mulai dengan membuat artikel pertama Anda."
+          action={
+            <Link
+              href="/dashboard/articles/new"
+              className={cn(buttonVariants({ variant: "link" }))}
+            >
+              Buat artikel pertama
+            </Link>
+          }
+        />
       ) : (
         <div className="rounded-lg border">
           <Table>
@@ -113,6 +122,6 @@ export default async function ArticlesPage({ searchParams }: Props) {
           </Table>
         </div>
       )}
-    </div>
+    </PageContainer>
   );
 }

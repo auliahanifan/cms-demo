@@ -1,28 +1,12 @@
 import Link from "next/link";
-import type { Role } from "@prisma/client";
 import { logoutAction } from "@/lib/actions/auth";
+import { dashboardNavItems } from "@/components/dashboard/nav";
 import { roleLabel } from "@/lib/auth/rbac";
 import type { SessionUser } from "@/lib/auth/types";
 import { Button } from "@/components/ui/button";
 
-type NavItem = {
-  href: string;
-  label: string;
-  roles?: Role[];
-};
-
-const navItems: NavItem[] = [
-  { href: "/dashboard", label: "Ringkasan" },
-  { href: "/dashboard/articles", label: "Artikel" },
-  { href: "/dashboard/products", label: "Produk", roles: ["ADMIN", "EDITOR"] },
-  { href: "/dashboard/categories", label: "Kategori", roles: ["ADMIN", "EDITOR"] },
-  { href: "/dashboard/tags", label: "Tag", roles: ["ADMIN", "EDITOR"] },
-  { href: "/dashboard/users", label: "Pengguna", roles: ["ADMIN"] },
-  { href: "/design-system", label: "Design System", roles: ["ADMIN"] },
-];
-
 export function DashboardSidebar({ user }: { user: SessionUser }) {
-  const items = navItems.filter(
+  const items = dashboardNavItems.filter(
     (item) => !item.roles || item.roles.includes(user.role)
   );
 
