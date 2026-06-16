@@ -1,12 +1,13 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import type { Category, Tag } from "@prisma/client";
 import type { ActionResult } from "@/lib/actions/auth";
 import { FormMessage, FormField } from "@/components/forms/form-fields";
+import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { isEditorContentEmpty } from "@/lib/sanitize/html";
 
 type ArticleFormData = {
   title: string;
@@ -35,10 +36,23 @@ export function ArticleForm({
   submitLabel?: string;
 }) {
   const [state, formAction] = useActionState(action, null);
+  const [content, setContent] = useState(article?.content ?? "");
+  const [contentError, setContentError] = useState<string | null>(null);
   const selectedTagIds = article?.tags.map((t) => t.tag.id) ?? [];
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form
+      action={formAction}
+      className="space-y-6"
+      onSubmit={(event) => {
+        if (isEditorContentEmpty(content)) {
+          event.preventDefault();
+          setContentError("Isi artikel wajib diisi");
+          return;
+        }
+        setContentError(null);
+      }}
+    >
       <FormMessage state={state} />
       {state?.success && (
         <p className="text-sm text-green-600">Perubahan berhasil disimpan.</p>
@@ -59,14 +73,20 @@ export function ArticleForm({
 
       <div className="space-y-2">
         <Label htmlFor="content">Isi Artikel</Label>
-        <Textarea
-          id="content"
-          name="content"
-          required
-          rows={16}
-          defaultValue={article?.content}
+        <input type="hidden" name="content" value={content} />
+        <RichTextEditor
+          value={content}
+          onChange={(html) => {
+            setContent(html);
+            if (!isEditorContentEmpty(html)) {
+              setContentError(null);
+            }
+          }}
           placeholder="Tulis isi artikel di sini..."
         />
+        {contentError && (
+          <p className="text-sm text-destructive">{contentError}</p>
+        )}
       </div>
 
       <div className="space-y-2">

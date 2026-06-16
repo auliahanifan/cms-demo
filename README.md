@@ -37,6 +37,7 @@ Ringkasan:
 ```bash
 cp .env.example .env.local
 # Isi DATABASE_URL, DIRECT_URL, SESSION_SECRET dari Supabase
+# Isi NEXT_PUBLIC_SUPABASE_URL dan SUPABASE_SERVICE_ROLE_KEY untuk upload gambar
 
 npm install
 npx prisma migrate deploy

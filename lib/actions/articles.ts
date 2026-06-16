@@ -14,17 +14,37 @@ import {
   canSubmitForReview,
   canUnpublish,
 } from "@/lib/auth/rbac";
+import { z } from "zod";
 import { articleSchema } from "@/lib/validations/schemas";
 import { uniqueSlug } from "@/lib/utils/slug";
+import {
+  isEditorContentEmpty,
+  sanitizeArticleHtml,
+} from "@/lib/sanitize/html";
 import type { ActionResult } from "@/lib/actions/auth";
 
 function parseArticleForm(formData: FormData) {
   const tagIds = formData.getAll("tagIds").map(String).filter(Boolean);
   const categoryId = formData.get("categoryId") as string;
+  const rawContent = String(formData.get("content") ?? "");
+  const content = sanitizeArticleHtml(rawContent);
+
+  if (isEditorContentEmpty(content)) {
+    return {
+      success: false as const,
+      error: new z.ZodError([
+        {
+          code: "custom",
+          message: "Isi artikel wajib diisi",
+          path: ["content"],
+        },
+      ]),
+    };
+  }
 
   return articleSchema.safeParse({
     title: formData.get("title"),
-    content: formData.get("content"),
+    content,
     excerpt: formData.get("excerpt") || undefined,
     categoryId: categoryId || undefined,
     tagIds: tagIds.length > 0 ? tagIds : undefined,

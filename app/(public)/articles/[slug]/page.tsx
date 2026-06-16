@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Badge } from "@/components/ui/badge";
+import { ArticleContent } from "@/components/public/article-content";
 import { getPublishedArticleBySlug } from "@/lib/queries/articles";
 import { formatDate } from "@/lib/utils/date";
 
@@ -54,9 +55,7 @@ export default async function ArticleDetailPage({ params }: Props) {
           </div>
         )}
       </header>
-      <div className="prose prose-neutral max-w-none whitespace-pre-wrap leading-relaxed">
-        {article.content}
-      </div>
+      <ArticleContent content={article.content} />
     </article>
   );
 }

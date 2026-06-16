@@ -73,15 +73,19 @@ Jika kode sudah ada di GitHub, lewati ke Bagian 3.
 
 ### Tambahkan Environment Variables
 
-Di halaman import, klik **Environment Variables** lalu tambahkan 3 variabel:
+Di halaman import, klik **Environment Variables** lalu tambahkan variabel berikut:
 
 | Name | Value |
 |------|-------|
 | `DATABASE_URL` | Paste connection string port 6543 dari Bagian 1 |
 | `DIRECT_URL` | Paste connection string port 5432 dari Bagian 1 |
 | `SESSION_SECRET` | Paste string acak dari Bagian 1 |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Settings → API → Project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Settings → API → `service_role` (secret) |
 
-Centang **Production**, **Preview**, dan **Development** untuk ketiga variabel.
+Centang **Production**, **Preview**, dan **Development** untuk semua variabel.
+
+> **Upload gambar artikel** memakai Supabase Storage bucket `article-images`. Bucket ini sudah dibuat otomatis saat setup project. `SUPABASE_SERVICE_ROLE_KEY` hanya dipakai di server — jangan dibagikan atau dipublish.
 
 5. Klik **Deploy**
 6. Tunggu 2–5 menit sampai status **Ready**
@@ -175,9 +179,11 @@ Reset lewat Supabase Table Editor:
 ## Ringkasan Environment Variables
 
 ```
-DATABASE_URL  → Supabase pooler (6543) → aplikasi jalan
-DIRECT_URL    → Supabase direct (5432)  → migrate database
-SESSION_SECRET → string acak panjang     → keamanan login
+DATABASE_URL               → Supabase pooler (6543) → aplikasi jalan
+DIRECT_URL                 → Supabase direct (5432)  → migrate database
+SESSION_SECRET             → string acak panjang       → keamanan login
+NEXT_PUBLIC_SUPABASE_URL   → Supabase API URL          → upload gambar artikel
+SUPABASE_SERVICE_ROLE_KEY  → Supabase service role     → upload gambar (server only)
 ```
 
 Selesai! Blog CMS Anda sudah live. 🎉
