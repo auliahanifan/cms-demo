@@ -4,6 +4,7 @@ import { useActionState, useRef, useState } from "react";
 import type { Product } from "@prisma/client";
 import type { ActionResult } from "@/lib/actions/auth";
 import { FormMessage, FormField } from "@/components/forms/form-fields";
+import { SuccessMessage } from "@/components/patterns/success-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -66,7 +67,7 @@ export function ProductForm({
     <form action={formAction} className="space-y-6">
       <FormMessage state={state} />
       {state?.success && (
-        <p className="text-sm text-green-600">Perubahan berhasil disimpan.</p>
+        <SuccessMessage>Perubahan berhasil disimpan.</SuccessMessage>
       )}
 
       <FormField

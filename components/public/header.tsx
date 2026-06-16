@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getAllCategories } from "@/lib/queries/articles";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export async function PublicHeader() {
   const categories = await getAllCategories();
@@ -21,18 +23,15 @@ export async function PublicHeader() {
           </nav>
         </div>
         <form action="/search" method="get" className="flex gap-2">
-          <input
+          <Input
             type="search"
             name="q"
             placeholder="Cari artikel..."
-            className="h-9 w-full rounded-md border bg-background px-3 text-sm sm:w-48"
+            className="sm:w-48"
           />
-          <button
-            type="submit"
-            className="rounded-md bg-primary px-3 text-sm text-primary-foreground"
-          >
+          <Button type="submit" size="lg">
             Cari
-          </button>
+          </Button>
         </form>
       </div>
       {categories.length > 0 && (

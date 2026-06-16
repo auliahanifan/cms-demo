@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import type { Category, Tag } from "@prisma/client";
 import type { ActionResult } from "@/lib/actions/auth";
 import { FormMessage, FormField } from "@/components/forms/form-fields";
+import { SuccessMessage } from "@/components/patterns/success-message";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -55,7 +56,7 @@ export function ArticleForm({
     >
       <FormMessage state={state} />
       {state?.success && (
-        <p className="text-sm text-green-600">Perubahan berhasil disimpan.</p>
+        <SuccessMessage>Perubahan berhasil disimpan.</SuccessMessage>
       )}
 
       <FormField

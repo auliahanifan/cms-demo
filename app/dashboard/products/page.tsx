@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { requireRole } from "@/lib/auth/session";
 import { getDashboardProducts } from "@/lib/queries/products";
 import { formatPrice } from "@/lib/utils/currency";
+import { PageContainer } from "@/components/patterns/page-container";
+import { PageHeader } from "@/components/patterns/page-header";
+import { EmptyState } from "@/components/patterns/empty-state";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -37,16 +40,16 @@ export default async function ProductsPage({ searchParams }: Props) {
   const products = await getDashboardProducts({ q, published });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold">Produk</h1>
-          <p className="text-muted-foreground">Kelola katalog produk.</p>
-        </div>
-        <Link href="/dashboard/products/new" className={cn(buttonVariants())}>
-          Produk Baru
-        </Link>
-      </div>
+    <PageContainer variant="dashboard">
+      <PageHeader
+        title="Produk"
+        description="Kelola katalog produk."
+        actions={
+          <Link href="/dashboard/products/new" className={cn(buttonVariants())}>
+            Produk Baru
+          </Link>
+        }
+      />
 
       <form className="flex flex-wrap gap-2" method="get">
         <Input
@@ -70,12 +73,18 @@ export default async function ProductsPage({ searchParams }: Props) {
       </form>
 
       {products.length === 0 ? (
-        <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-          Belum ada produk.{" "}
-          <Link href="/dashboard/products/new" className="underline">
-            Buat produk pertama
-          </Link>
-        </div>
+        <EmptyState
+          title="Belum ada produk"
+          description="Mulai dengan membuat produk pertama Anda."
+          action={
+            <Link
+              href="/dashboard/products/new"
+              className={cn(buttonVariants({ variant: "link" }))}
+            >
+              Buat produk pertama
+            </Link>
+          }
+        />
       ) : (
         <div className="rounded-lg border">
           <Table>
@@ -115,6 +124,6 @@ export default async function ProductsPage({ searchParams }: Props) {
           </Table>
         </div>
       )}
-    </div>
+    </PageContainer>
   );
 }

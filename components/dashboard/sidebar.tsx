@@ -18,6 +18,7 @@ const navItems: NavItem[] = [
   { href: "/dashboard/categories", label: "Kategori", roles: ["ADMIN", "EDITOR"] },
   { href: "/dashboard/tags", label: "Tag", roles: ["ADMIN", "EDITOR"] },
   { href: "/dashboard/users", label: "Pengguna", roles: ["ADMIN"] },
+  { href: "/design-system", label: "Design System", roles: ["ADMIN"] },
 ];
 
 export function DashboardSidebar({ user }: { user: SessionUser }) {

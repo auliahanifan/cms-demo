@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import type { Role } from "@prisma/client";
 import type { ActionResult } from "@/lib/actions/auth";
 import { FormMessage, FormField } from "@/components/forms/form-fields";
+import { SuccessMessage } from "@/components/patterns/success-message";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 
@@ -32,7 +33,7 @@ export function UserForm({
     <form action={formAction} className="space-y-4">
       <FormMessage state={state} />
       {state?.success && (
-        <p className="text-sm text-green-600">Berhasil disimpan.</p>
+        <SuccessMessage>Berhasil disimpan.</SuccessMessage>
       )}
 
       <FormField label="Nama" name="name" required defaultValue={user?.name} />

@@ -4,6 +4,7 @@ import { useActionState, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { ActionResult } from "@/lib/actions/auth";
 import { FormMessage, FormField } from "@/components/forms/form-fields";
+import { SuccessMessage } from "@/components/patterns/success-message";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -73,7 +74,7 @@ export function CategoryTagManager({
       </form>
       <FormMessage state={createState} />
       {createState?.success && (
-        <p className="text-sm text-green-600">Berhasil ditambahkan.</p>
+        <SuccessMessage>Berhasil ditambahkan.</SuccessMessage>
       )}
 
       {items.length === 0 ? (

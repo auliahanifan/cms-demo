@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { SuccessMessage } from "@/components/patterns/success-message";
 
 type FormAction = (
   prev: ActionResult | null,
@@ -41,7 +42,7 @@ export function ActionForm({
       <FormMessage state={state} />
       {children}
       {state?.success && (
-        <p className="text-sm text-green-600">Berhasil disimpan.</p>
+        <SuccessMessage>Berhasil disimpan.</SuccessMessage>
       )}
     </form>
   );
